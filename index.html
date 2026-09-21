@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flores Amarillas - 21 de Septiembre 💛</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #030305;
+            color: #f4f4f5;
+            overflow-x: hidden;
+        }
+        .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        /* Rosas de fondo */
+        @keyframes roseSway {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(5deg) scale(1.05); }
+        }
+        .rose-bg-1 { animation: roseSway 8s ease-in-out infinite; }
+        .rose-bg-2 { animation: roseSway 10s ease-in-out infinite reverse; }
+
+        /* Animación de palabras flotantes por toda la pantalla */
+        @keyframes floatWordAll {
+            0% {
+                transform: translateY(105vh) scale(0.9);
+                opacity: 0;
+            }
+            15% { opacity: 1; }
+            85% { opacity: 1; }
+            100% {
+                transform: translateY(-10vh) scale(1.15);
+                opacity: 0;
+            }
+        }
+        .floating-word-item {
+            position: fixed;
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            pointer-events: none;
+            white-space: nowrap;
+            z-index: 5;
+            text-shadow: 0 0 18px rgba(250, 204, 21, 0.9), 0 0 35px rgba(234, 179, 8, 0.6);
+            animation: floatWordAll linear infinite;
+        }
+
+        /* Animación de Flores Amarillas Grandes por toda la pantalla */
+        @keyframes floatFlowerAll {
+            0% {
+                transform: translateY(105vh) rotate(0deg) scale(0.8);
+                opacity: 0;
+            }
+            15% { opacity: 1; }
+            85% { opacity: 1; }
+            100% {
+                transform: translateY(-10vh) rotate(360deg) scale(1.3);
+                opacity: 0;
+            }
+        }
+        .flower-particle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 5;
+            animation: floatFlowerAll linear infinite;
+            filter: drop-shadow(0 0 16px rgba(250, 204, 21, 1));
+        }
+
+        /* Efecto Cristal Nocturno */
+        .glass-nocturnal {
+            background: rgba(15, 15, 22, 0.85);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(250, 204, 21, 0.3);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9);
+        }
+
+        #btn-no {
+            transition: all 0.15s ease-out;
+        }
+    </style>
+</head>
+<body class="relative min-h-screen flex flex-col items-center justify-start selection:bg-yellow-500 selection:text-black">
+
+    <!-- MODAL DE BIENVENIDA INICIAL -->
+    <div id="welcome-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-md p-4 transition-opacity duration-500">
+        <div class="glass-nocturnal max-w-md w-full p-8 rounded-3xl text-center relative overflow-hidden shadow-2xl border border-yellow-500/30">
+            <div class="absolute -top-10 -right-10 w-32 h-32 bg-yellow-500/10 rounded-full blur-2xl"></div>
+            
+            <div class="inline-block p-3 bg-yellow-500/10 rounded-2xl mb-4 border border-yellow-500/20 text-3xl animate-bounce">
+                🌻
+            </div>
+            
+            <h2 class="text-2xl md:text-3xl font-serif font-bold text-yellow-400 mb-4">
+                ¡Hola!
+            </h2>
+            <p class="text-zinc-300 text-base md:text-lg mb-8 leading-relaxed">
+                Dani te tiene un presente por ser tan bonita ✨
+            </p>
+            
+            <div id="modal-buttons" class="flex flex-col sm:flex-row items-center justify-center gap-4 relative min-h-[60px]">
+                <button id="btn-si" class="w-full sm:w-auto px-8 py-3.5 bg-gradient-to-r from-yellow-500 to-amber-500 text-black font-semibold rounded-xl shadow-lg shadow-yellow-500/20 hover:scale-105 transition-all">
+                    Acepto 🌻
+                </button>
+                <button id="btn-no" class="w-full sm:w-auto px-8 py-3.5 bg-zinc-800 text-zinc-300 font-semibold rounded-xl border border-zinc-700 hover:bg-zinc-700">
+                    No acepto 🙈
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTENEDORES DE ANIMACIONES POR TODA LA PANTALLA -->
+    <div id="flower-particles-container" class="fixed inset-0 pointer-events-none overflow-hidden z-0"></div>
+    <div id="floating-words-container" class="fixed inset-0 pointer-events-none overflow-hidden z-0"></div>
+
+    <!-- ROSAS AMARILLAS DE FONDO -->
+    <div class="fixed top-[-5%] left-[-5%] w-96 h-96 opacity-30 pointer-events-none z-0 rose-bg-1">
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="w-full h-full text-yellow-400 fill-current">
+            <path d="M43.1,-58.4C55.2,-48.9,64.2,-36.2,69.5,-21.8C74.9,-7.5,76.6,8.6,71.4,22.1C66.3,35.6,54.3,46.5,41.2,55.1C28.1,63.7,14,70,-0.7,71C-15.5,72,-31,67.6,-44.6,59.1C-58.1,50.7,-69.8,38.2,-74.6,23.5C-79.5,8.7,-77.4,-8.3,-70.5,-22.3C-63.6,-36.4,-51.9,-47.5,-39.2,-56.6C-26.4,-65.7,-13.2,-72.8,1.2,-74.2C15.5,-75.7,31,-71.4,43.1,-58.4Z" transform="translate(100 100)" />
+        </svg>
+    </div>
+    <div class="fixed bottom-[-5%] right-[-5%] w-[30rem] h-[30rem] opacity-25 pointer-events-none z-0 rose-bg-2">
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="w-full h-full text-amber-300 fill-current">
+            <path d="M41.3,-53.4C53.7,-43.3,64.3,-31.2,69.8,-16.6C75.3,-2,75.7,15.1,68.9,28.8C62.1,42.5,48.1,52.8,33.5,59.4C18.8,66,3.5,69,-10.5,67.2C-24.5,65.4,-37.2,58.8,-48.7,48.7C-60.2,38.7,-70.5,25.2,-73.4,9.5C-76.3,-6.2,-71.8,-24.1,-61.8,-37.1C-51.8,-50.1,-36.3,-58.2,-21.5,-66C-6.8,-73.8,7.1,-81.4,20.4,-78C33.7,-74.7,43.4,-84.6,41.3,-53.4Z" transform="translate(100 100)" />
+        </svg>
+    </div>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main id="main-content" class="relative z-10 w-full max-w-2xl px-4 py-16 flex flex-col items-center opacity-0 pointer-events-none transition-opacity duration-1000">
+        
+        <!-- Encabezado -->
+        <div class="text-center mb-10">
+            <span class="inline-block px-4 py-1.5 rounded-full bg-yellow-500/10 border border-yellow-500/30 text-yellow-400 text-sm font-medium tracking-wide mb-3">
+                21 de Septiembre 🌻
+            </span>
+            <h1 class="text-4xl md:text-6xl font-serif font-bold text-yellow-300 tracking-tight mb-2">
+                Flores Amarillas
+            </h1>
+            <p class="text-zinc-400 text-sm md:text-base">Un detalle especial para una chica hermosa BELEN.</p>
+        </div>
+
+        <!-- REPRODUCTOR DE MÚSICA DUAL -->
+        <div class="glass-nocturnal w-full rounded-2xl p-5 mb-8 border border-yellow-500/30 shadow-xl relative z-20">
+            <div class="flex items-center justify-between mb-3">
+                <span class="text-xs uppercase tracking-wider text-yellow-400 font-semibold flex items-center gap-1.5">
+                    🎵 Elige una canción para escuchar:
+                </span>
+                <span id="now-playing" class="text-xs text-zinc-400 italic">Ninguna reproduciéndose</span>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <!-- Canción 1 -->
+                <button onclick="playSong(1)" id="song-btn-1" class="flex items-center justify-between p-3 rounded-xl bg-zinc-900/90 border border-zinc-800 hover:border-yellow-500/50 transition-all text-left group">
+                    <div>
+                        <p class="text-sm font-medium text-yellow-200 group-hover:text-yellow-400">1. Yoko</p>
+                        <p class="text-xs text-zinc-400">Yoko Belula</p>
+                    </div>
+                    <span class="w-8 h-8 rounded-full bg-yellow-500/10 flex items-center justify-center text-yellow-400 text-sm group-hover:bg-yellow-500 group-hover:text-black transition-all">▶</span>
+                </button>
+
+                <!-- Canción 2 -->
+                <button onclick="playSong(2)" id="song-btn-2" class="flex items-center justify-between p-3 rounded-xl bg-zinc-900/90 border border-zinc-800 hover:border-yellow-500/50 transition-all text-left group">
+                    <div>
+                        <p class="text-sm font-medium text-yellow-200 group-hover:text-yellow-400">2. Flores</p>
+                        <p class="text-xs text-zinc-400">Flores amarillas</p>
+                    </div>
+                    <span class="w-8 h-8 rounded-full bg-yellow-500/10 flex items-center justify-center text-yellow-400 text-sm group-hover:bg-yellow-500 group-hover:text-black transition-all">▶</span>
+                </button>
+            </div>
+
+            <!-- Archivos de Audio de las Canciones -->
+            <audio id="audio-1" loop>
+                <source src="Yoko.mp3" type="audio/mpeg">
+            </audio>
+            <audio id="audio-2" loop>
+                <source src="Flores.mp3" type="audio/mpeg">
+            </audio>
+        </div>
+
+        <!-- Tarjeta Romántica con Video Grande -->
+        <div class="glass-nocturnal w-full rounded-3xl p-6 md:p-10 shadow-2xl relative z-20 overflow-hidden border border-yellow-500/25">
+            
+            <!-- Video Grande de Ella -->
+            <div class="w-full flex justify-center mb-8">
+                <div class="relative group">
+                    <div class="absolute -inset-1 bg-gradient-to-r from-yellow-500 to-amber-300 rounded-2xl blur opacity-40 group-hover:opacity-70 transition duration-500"></div>
+                    <div class="relative w-64 h-80 sm:w-72 sm:h-96 rounded-2xl overflow-hidden border-2 border-yellow-500/50 bg-zinc-900 shadow-xl">
+                        <video 
+                            src="video4.mp4" 
+                            autoplay 
+                            loop 
+                            muted 
+                            playsinline 
+                            class="w-full h-full object-cover object-center">
+                        </video>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Texto de la Carta -->
+            <div class="text-center space-y-4">
+                <h3 class="text-2xl font-serif font-semibold text-yellow-400">Para ti</h3>
+                <p class="text-zinc-200 text-base md:text-lg leading-relaxed font-light px-2">
+                    Preciosa esta fecha la quiero compartir con este detalle contigo , eres importante y te mereces todo esto. Eres muy encantadora y me encanta compartir momentos contigo. Se que eres renegoncita pero se que en el fondo tienes tu lado tierno. Te quiero mucho Belen.
+                </p>
+                
+                <!-- BOTÓN DE AUDIO DE DANI (CENTRAL) -->
+                <div class="pt-6 border-t border-yellow-500/20 flex flex-col items-center justify-center gap-2">
+                    <button onclick="toggleDaniAudio()" id="dani-audio-btn" class="px-6 py-3 bg-gradient-to-r from-yellow-500 to-amber-400 text-black font-bold rounded-2xl shadow-lg shadow-yellow-500/20 hover:scale-105 transition-all flex items-center gap-2.5 text-sm md:text-base">
+                        <span id="dani-icon" class="text-lg">🎙️</span> 
+                        <span id="dani-text">AUDIO DE DANI</span>
+                    </button>
+                    <span class="text-xs text-zinc-400 italic">Pulsa para escuchar el mensaje</span>
+                </div>
+
+                <!-- Archivo de Audio de Dani -->
+                <audio id="audio-dani-file">
+                    <source src="daniaudioxd.mp3" type="audio/mpeg">
+                </audio>
+            </div>
+        </div>
+
+        <footer class="mt-12 text-center text-xs text-zinc-500 relative z-20">
+            Creado con amor para celebrar este 21 de septiembre ✨
+        </footer>
+    </main>
+
+    <!-- SCRIPTS DE INTERACTIVIDAD -->
+    <script>
+        // --- 1. LÓGICA DEL BOTÓN "NO" QUE HUYE ---
+        const btnNo = document.getElementById('btn-no');
+        const btnSi = document.getElementById('btn-si');
+        const welcomeModal = document.getElementById('welcome-modal');
+        const mainContent = document.getElementById('main-content');
+
+        function moveButton() {
+            const maxX = window.innerWidth - btnNo.offsetWidth - 40;
+            const maxY = window.innerHeight - btnNo.offsetHeight - 40;
+            
+            const randomX = Math.max(20, Math.floor(Math.random() * maxX));
+            const randomY = Math.max(20, Math.floor(Math.random() * maxY));
+            
+            btnNo.style.position = 'fixed';
+            btnNo.style.left = randomX + 'px';
+            btnNo.style.top = randomY + 'px';
+        }
+
+        btnNo.addEventListener('mouseover', moveButton);
+        btnNo.addEventListener('click', (e) => {
+            e.preventDefault();
+            moveButton();
+        });
+
+        // --- 2. ACCIÓN DEL BOTÓN "SÍ" ---
+        btnSi.addEventListener('click', () => {
+            welcomeModal.style.opacity = '0';
+            setTimeout(() => {
+                welcomeModal.style.display = 'none';
+                mainContent.classList.remove('opacity-0', 'pointer-events-none');
+            }, 500);
+        });
+
+        // --- 3. REPRODUCTOR DE MÚSICA DUAL ---
+        const audio1 = document.getElementById('audio-1');
+        const audio2 = document.getElementById('audio-2');
+        const btn1 = document.getElementById('song-btn-1');
+        const btn2 = document.getElementById('song-btn-2');
+        const nowPlaying = document.getElementById('now-playing');
+        
+        let currentActiveAudio = null; // Para saber cuál canción está sonando
+
+        function playSong(track) {
+            audio1.pause();
+            audio2.pause();
+            audio1.currentTime = 0;
+            audio2.currentTime = 0;
+
+            btn1.classList.remove('border-yellow-500', 'bg-yellow-500/10');
+            btn2.classList.remove('border-yellow-500', 'bg-yellow-500/10');
+
+            if (track === 1) {
+                audio1.volume = isDaniPlaying ? 0.2 : 1.0; // Si Dani habla, suena despacito
+                audio1.play().catch(e => console.log("Audio play blocked", e));
+                currentActiveAudio = audio1;
+                btn1.classList.add('border-yellow-500', 'bg-yellow-500/10');
+                nowPlaying.innerText = "Reproduciendo: YOKO 💛";
+            } else if (track === 2) {
+                audio2.volume = isDaniPlaying ? 0.2 : 1.0; // Si Dani habla, suena despacito
+                audio2.play().catch(e => console.log("Audio play blocked", e));
+                currentActiveAudio = audio2;
+                btn2.classList.add('border-yellow-500', 'bg-yellow-500/10');
+                nowPlaying.innerText = "Reproduciendo: FLORES AMARILLAS 🌻";
+            }
+        }
+
+        // --- 4. REPRODUCTOR DE AUDIO DE DANI (BAJA EL VOLUMEN DE LA MÚSICA DE ARRIBA) ---
+        const audioDaniFile = document.getElementById('audio-dani-file');
+        const daniAudioBtn = document.getElementById('dani-audio-btn');
+        const daniIcon = document.getElementById('dani-icon');
+        const daniText = document.getElementById('dani-text');
+        let isDaniPlaying = false;
+
+        function toggleDaniAudio() {
+            if (isDaniPlaying) {
+                // Pausamos el audio de Dani y regresamos la música de arriba a volumen normal (1.0)
+                audioDaniFile.pause();
+                audioDaniFile.currentTime = 0;
+                isDaniPlaying = false;
+                daniIcon.innerText = "🎙️";
+                daniText.innerText = "AUDIO DE DANI";
+                daniAudioBtn.classList.remove('bg-amber-300', 'animate-pulse');
+                daniAudioBtn.classList.add('from-yellow-500', 'to-amber-400');
+
+                if (currentActiveAudio) {
+                    currentActiveAudio.volume = 1.0;
+                }
+            } else {
+                // Reproducimos el audio de Dani y bajamos la música de arriba al 20% (0.2) para que se luzca tu voz
+                if (currentActiveAudio) {
+                    currentActiveAudio.volume = 0.2;
+                }
+
+                audioDaniFile.play().then(() => {
+                    isDaniPlaying = true;
+                    daniIcon.innerText = "⏸️";
+                    daniText.innerText = "PAUSAR AUDIO";
+                    daniAudioBtn.classList.remove('from-yellow-500', 'to-amber-400');
+                    daniAudioBtn.classList.add('bg-amber-300', 'animate-pulse');
+                }).catch(e => {
+                    console.log("Audio play blocked", e);
+                    alert("Asegúrate de haber colocado el archivo 'audio-dani.mp3' en la misma carpeta.");
+                });
+            }
+        }
+
+        audioDaniFile.addEventListener('ended', () => {
+            isDaniPlaying = false;
+            daniIcon.innerText = "🎙️";
+            daniText.innerText = "AUDIO DE DANI";
+            daniAudioBtn.classList.remove('bg-amber-300', 'animate-pulse');
+            daniAudioBtn.classList.add('from-yellow-500', 'to-amber-400');
+
+            // Regresa la música de arriba a su volumen normal cuando termina el mensaje
+            if (currentActiveAudio) {
+                currentActiveAudio.volume = 1.0;
+            }
+        });
+
+        // --- 5. FLORES AMARILLAS POR TODO EL ALREDEDOR ---
+        const flowerContainer = document.getElementById('flower-particles-container');
+        const flowerEmojis = ['🌻', '🌼', '✨', '💛'];
+
+        function createFlowerParticle() {
+            const el = document.createElement('div');
+            el.className = 'flower-particle';
+            el.innerText = flowerEmojis[Math.floor(Math.random() * flowerEmojis.length)];
+            
+            el.style.left = Math.random() * 95 + 'vw';
+            
+            const duration = Math.random() * 5 + 6;
+            el.style.animationDuration = duration + 's';
+            
+            const size = Math.random() * 16 + 32;
+            el.style.fontSize = size + 'px';
+
+            flowerContainer.appendChild(el);
+            setTimeout(() => el.remove(), duration * 1000);
+        }
+
+        setInterval(createFlowerParticle, 300);
+
+        // --- 6. PALABRAS FLOTANTES POR TODO EL ALREDEDOR ---
+        const wordsList = [
+            "Flores Amarillas 🌻",
+            "Dani & Belen 💛",
+            "21 de Septiembre",
+            "Hermosa ✨",
+            "Belula 🌼",
+            "Risita Jijiji 💛",
+            "Yoko",
+            "Preciosa✨",
+            "Encantadora 🌻",
+            "Preciosa💛 "
+        ];
+
+        const wordContainer = document.getElementById('floating-words-container');
+
+        function createFloatingWord() {
+            const el = document.createElement('div');
+            el.className = 'floating-word-item';
+            el.innerText = wordsList[Math.floor(Math.random() * wordsList.length)];
+            
+            el.style.left = Math.random() * 85 + 'vw';
+            
+            const colors = ['#fde047', '#facc15', '#fef08a', '#fef9c3', '#eab308'];
+            el.style.color = colors[Math.floor(Math.random() * colors.length)];
+            
+            const fontSize = Math.floor(Math.random() * 6) + 18;
+            el.style.fontSize = fontSize + 'px';
+            
+            const duration = Math.random() * 5 + 7;
+            el.style.animationDuration = duration + 's';
+            
+            wordContainer.appendChild(el);
+            setTimeout(() => el.remove(), duration * 1000);
+        }
+
+        setInterval(createFloatingWord, 700);
+    </script>
+</body>
+</html>
